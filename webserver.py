@@ -10,11 +10,12 @@ from datastore import MappingCollection
 
 @app.route("/mappings", methods=["GET"])
 def view_mappings():
-    # TODO : LIST OF MAPPINGS
+    # TODO : List mappings on screen
     return render_template("view.html", content="")
 
 @app.route("/mapping/<slug>", methods=["GET"])
 def view(slug):
+    # TODO : Make this prettier, and provide adding functionatilty?
     mapping = MappingCollection().load_mapping(slug)
     return render_template("add.html", slug=mapping["slug"], url=mapping["url"])
 
