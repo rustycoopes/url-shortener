@@ -5,6 +5,7 @@ verify_ssl = true
 
 [dev-packages]
 pytest = "*"
+rope = "*"
 
 [packages]
 dnspython = "*"
@@ -12,6 +13,10 @@ flask = "*"
 gunicorn = "*"
 pymongo = "*"
 nanoid = "*"
+flask-inputs = "*"
+jsonschema = "*"
+mocker = "*"
+pytest-mock = "*"
 
 [requires]
 python_version = "3.7"
