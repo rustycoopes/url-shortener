@@ -13,15 +13,15 @@ def view_mappings():
     # TODO : LIST OF MAPPINGS
     return render_template("view.html", content="")
 
-@app.route("/mapping", methods=["GET", "POST"])
-def add():
-    # TODO : VIEWING PAGE
-   return render_template("add.html")
+@app.route("/mapping/<slug>", methods=["GET"])
+def view(slug):
+    mapping = MappingCollection().load_mapping(slug)
+    return render_template("add.html", slug=mapping["slug"], url=mapping["url"])
 
 @app.route("/<slug>", methods=["GET"])
 def serve(slug=None):
     if slug is not None:
-        mapping = _load_mapping_from_slug(slug)
+        mapping = MappingCollection().load_mapping(slug)
         if mapping is not None:
             return redirect(mapping["url"])
         else: 
@@ -39,23 +39,17 @@ def serve_or_save():
     url = request.json.get("url", None)
 
     if slug is not None and url is not None:
-        _save_mapping(slug, url)
+        MappingCollection().save_mapping(slug, url)
         return redirect(url)
 
     elif url is not None and slug is None: # if providing a url, we need to create and store new slug
         slug = generate('1234567890abcdef', 5)  
-        _save_mapping(slug, url)
+        MappingCollection().save_mapping(slug, url)
         return jsonify({"slug": slug, "url":url})
 
     elif slug is not None and url is None:
         return serve(slug)
 
-
-def _save_mapping(slug, url):
-    return MappingCollection().save_mapping(slug, url)
-
-def _load_mapping_from_slug(slug):
-    return MappingCollection().load_mapping(slug)
 
 @app.errorhandler(InvalidUsage)
 def handle_invalid_usage(error):

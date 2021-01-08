@@ -1,8 +1,8 @@
 from sys import path
 import os
-additionalPath = os.path.realpath('..\\')
-path.append(additionalPath)
-print(path)
+#additionalPath = os.path.realpath('..\\')
+#path.append(additionalPath)
+#print(path)
 
 import webserver
 import pytest
