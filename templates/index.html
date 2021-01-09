@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title%}Url Shortener {% endblock%}
+{% block headline%}URL Shortener home{% endblock%}
+{% block content %}
+<h1>
+    
+</h1>    
+https://www.russcoopersoftware.com
+
+usage:
+    restservice
+        get  rd.rc-ss.com/slug   - will redirect to the mapped page
+        post rd.rc.ss.com  urljson - will save mapping
+
+    webpage
+        www.rd.rc-ss.com/mapping/slug - will view mapping
+        www.rd.rc-ss.com/mappings will show all mappings will
+        www.rd.rc-ss.com/  will show this page
+
+https://github.com/rustycoopes/url-shortener
+
+{{content}}
+{% endblock %}

@@ -8,6 +8,11 @@ from validation import validate_shortener_request
 from datastore import MappingCollection
 
 
+@app.route("/home", methods=["GET"])
+def view_home():
+    return render_template("index.html", content="")
+
+
 @app.route("/mappings", methods=["GET"])
 def view_mappings():
     # TODO : List mappings on screen
@@ -27,14 +32,15 @@ def serve(slug=None):
             return redirect(mapping["url"])
         else: 
             return jsonify({"error":"mapping not found, url to redirect could not be performed."})
+        
 
 @app.route("/", methods=["GET", "POST"])
 def serve_or_save():
     
     errors = validate_shortener_request(request)
+    
     if errors is not None:
-       # TODO : Redirect to a home page
-       raise InvalidUsage(errors)
+        return render_template("index.html", content="")
 
     slug = request.json.get("slug", None)
     url = request.json.get("url", None)
