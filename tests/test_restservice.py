@@ -3,18 +3,34 @@ import webserver
 import pytest
 
 
+
 def test_send_only_url_will_create_slug( mocker, client):
     # TODO : FIX TEST
     url = "someUrl"
+    mocker.patch('webserver.MappingCollection.save_mapping', return_value = True)
     payload = {"url":url}
-   # response = client.get("/", json=payload)
-   # result = response.get_json();
+    response = client.get("/", json=payload)
+    result = response.get_json();
     
-    #mocker.patch('webserver._save_mapping', return_value = True)
     
-    #assert result is not None
-    #assert "slug" in result
-    #assert result["url"] == url
+    assert result is not None
+    assert "slug" in result
+    assert result["url"] == url
+    assert result["errors"] == ""
+    pass
+
+def test_send_only_url_will_respond_error_if_not_saved( mocker, client):
+    # TODO : FIX TEST
+    url = "someUrl"
+    mocker.patch('webserver.MappingCollection.save_mapping', return_value = False)
+    payload = {"url":url}
+    response = client.get("/", json=payload)
+    result = response.get_json();
+    
+    assert result is not None
+    assert "slug" in result
+    assert result["url"] == url
+    assert result["errors"] == "Failed to save"
     pass
 
 def test_send_url_and_slug_will_create_slug_and_redirect():

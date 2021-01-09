@@ -33,7 +33,7 @@ def serve_or_save():
     
     errors = validate_shortener_request(request)
     if errors is not None:
-       print(errors)
+       # TODO : Redirect to a home page
        raise InvalidUsage(errors)
 
     slug = request.json.get("slug", None)
@@ -45,8 +45,10 @@ def serve_or_save():
 
     elif url is not None and slug is None: # if providing a url, we need to create and store new slug
         slug = generate('1234567890abcdef', 5)  
-        MappingCollection().save_mapping(slug, url)
-        return jsonify({"slug": slug, "url":url})
+        errors = ""
+        if not MappingCollection().save_mapping(slug, url):
+            errors = "Failed to save"
+        return jsonify({"slug": slug, "url":url,"errors":errors})
 
     elif slug is not None and url is None:
         return serve(slug)
