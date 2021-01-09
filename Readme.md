@@ -8,6 +8,7 @@ Main access point to view mappings and add newones via an API.  This also suppor
 The server runs as a flask application, which is deployed into the container to run  under  gunicorn
 
 ### Interface
+```python
 Calls to get or post are in the following format
    'type': 'object',
     'anyOf':[ 
@@ -22,6 +23,7 @@ Calls to get or post are in the following format
            'type': 'string',
        }
    },
+```
 
 * Flask service which runs under gunicorn.
 * Using bootstrap for styling
