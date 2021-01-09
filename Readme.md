@@ -5,7 +5,23 @@ Project is to provide a simple url shortener service which associates slugs with
 
 ### Website
 Main access point to view mappings and add newones via an API.  This also supports Json rest inefaces
-EXAMPLE TO FOLLOW
+The server runs as a flask application, which is deployed into the container to run  under  gunicorn
+
+### Interface
+Calls to get or post are in the following format
+   'type': 'object',
+    'anyOf':[ 
+       {'required': ['slug']},
+       {'required': ['url']} 
+    ],
+   'properties': {
+       'slug': {
+           'type': 'string',
+       },
+       'url': {
+           'type': 'string',
+       }
+   },
 
 * Flask service which runs under gunicorn.
 * Using bootstrap for styling
@@ -27,6 +43,6 @@ To install
 
 To Run
 * [ ] Start the container, and the app will run, or
-* [ ] pipenv run app.py
+* [ ] gunicorn -b 0.0.0.0:8000 webserver:app
 
 
