@@ -5,19 +5,57 @@
 <h1>
     
 </h1>    
-https://www.russcoopersoftware.com
 
-usage:
-    restservice
-        get  rd.rc-ss.com/slug   - will redirect to the mapped page
-        post rd.rc.ss.com  urljson - will save mapping
+<div class="container"></div>
+<div class="alert alert-success" role="alert">
+    <h4 class="alert-heading">This is the URL Shortener service</h4>
+    <p>This service is expected to be used as a reset service to redirect requests based on a given slug</p>
+    <hr>
+    <p class="mb-0">Copyright russcoopersoftware.com 2021</p>
+  </div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm">
+            <div class="card" style="width: 100%;">
+            <div class="card-body">
+            <h5 class="card-title">Rest Service</h5>
+            <h6 class="card-subtitle mb-2 text-muted">Json Interface</h6>
+            <p class="card-text">
+                <ol>
+                    <li><code>get</code>  rd.rc-ss.com/slug   - will redirect to the mapped page</li>
+                    <li><code>post</code> rd.rc.ss.com  urljson - will save mapping</li>
+                </ol>
+                </p>
+            <a href="https://github.com/rustycoopes/url-shortener" class="card-link">Json Schema</a>
+            </div>
+            </div>
+        </div>
+        <div class="col-sm">
+        <div class="card" style="width: 100%;">
+            <div class="card-body">
+            <h5 class="card-title">Web interface</h5>
+            <h6 class="card-subtitle mb-2 text-muted">Http Interface</h6>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.
+                <ol>
+                    <li><b>rd.rc-ss.com/mapping/<code>slug</code></b>  will show the mappings for a particular slug</li>
+                    <li><b>rd.rc-ss.com/mappings</b>  will show all stored mappings (slug=>url)</li>
+                </ol>
 
-    webpage
-        www.rd.rc-ss.com/mapping/slug - will view mapping
-        www.rd.rc-ss.com/mappings will show all mappings will
-        www.rd.rc-ss.com/  will show this page
 
-https://github.com/rustycoopes/url-shortener
+            </p>
+            <a href="https://rd.rc-ss.com/mappings" class="card-link">Mappings</a>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
 
-{{content}}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong>https://www.russcoopersoftware.com</strong> follow link to find out more.
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+    
 {% endblock %}
