@@ -22,13 +22,15 @@ def view_mappings():
 
 @app.route('/mapping/<slug>', methods=['GET'])
 def view(slug=''):
-    # TODO : Make this prettier, and provide adding functionatilty?
     logging.info('slug received {}'.format(slug))
     _mapping = MappingCollection().load_mapping(slug)
     return render_template('add.html', slug=_mapping['slug'], url=_mapping['url'])
 
 @app.route('/<slug>', methods=['GET'])
-def serve(slug=None):
+def serve(slug):
+    """
+    Slug =  None will never go into this method as it will fall into the velow.
+    """
     if slug == 'favicon.ico':
         return ''
 
@@ -40,36 +42,37 @@ def serve(slug=None):
         else: 
             logging.warning('slug received {}, mapping could not be found.'.format(slug))
             return jsonify({'error':'mapping not found, url to redirect could not be performed.'})
-        
+ 
+
 
 @app.route('/', methods=['GET', 'POST'])
 def serve_or_save():
     
     _errors = validate_shortener_request(request)
     # TODO : every call in seems to make three calls of this method (could be linked to call for favicon.ico)
-    if _errors is not None:
+    
+    if _errors is not None: # we must have atleast a URL or a slug
         logging.warning('invalid json submission, redirecting to root page')
         return render_template('index.html', content='')
 
-    slug = request.json.get('slug', None)
-    url = request.json.get('url', None)
+    _slug = request.json.get('slug', None)
+    _url = request.json.get('url', None)
 
-    if slug is not None and url is not None:
-        logging.info('saving provided slug "{}" and url "{}" will then redirect to url'.format(slug, url))
-        MappingCollection().save_mapping(slug, url)
-        return redirect(url)
+    if _slug is not None and _url is not None: # We have been provided both, just redirect
+        logging.info('saving provided slug "{}" and url "{}" will then redirect to url'.format(_slug, _url))
+        return redirect(_url)
 
-    elif url is not None and slug is None: # if providing a url, we need to create and store new slug
-        slug = generate('1234567890abcdef', 5)  
-        logging.info('saving NEW slug "{}" and url "{}" will then redirect to url'.format(slug, url))
+    elif _url is not None and _slug is None: # if providing a url, we need to create and store new slug
+        _slug = generate('1234567890abcdef', 5)  
+        logging.info('saving NEW slug "{}" and url "{}" will then redirect to url'.format(_slug, _url))
         _errors = ''
-        if not MappingCollection().save_mapping(slug, url):
+        if not MappingCollection().save_mapping(_slug, _url):
             _errors = 'Failed to save'
             logging.warning('failed to save document {}'.format(_errors))
-        return jsonify({'slug': slug, 'url':url,'errors':_errors})
+        return jsonify({'slug': _slug, 'url':_url,'errors':_errors})
 
-    elif slug is not None and url is None:
-        return serve(slug)
+    elif _slug is not None and _url is None:
+        return serve(_slug)
 
 
 @app.errorhandler(InvalidUsage)

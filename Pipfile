@@ -17,6 +17,7 @@ flask-inputs = "*"
 jsonschema = "*"
 mocker = "*"
 pytest-mock = "*"
+flask-testing = "*"
 
 [requires]
 python_version = "3.7"
