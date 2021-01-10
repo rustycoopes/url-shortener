@@ -7,20 +7,26 @@ class MappingCollection:
 
     def save_mapping(self, slug, url):
         # TODO : consider unique index for collection to get error on insert 
-        mappings = self._get_collecton()
-        data = {'slug': slug, 'url':url}
-        return mappings.insert_one(data).inserted_id is not None
+        _mappings = self._get_collecton()
+        _data = {'slug': slug, 'url':url}
+        return _mappings.insert_one(_data).inserted_id is not None
 
     def load_mapping(self, slug):
-        mappings = self._get_collecton()
-        return mappings.find_one({'slug':slug})
+        _mappings = self._get_collecton()
+        return _mappings.find_one({'slug':slug})
+
+
+    def load_all(self):
+        _mappings = self._get_collecton()
+        return _mappings.find()
+
 
     def _get_collecton(self):
         # TODO : Move connection string into configuration, possibly also database and collection name
         if self._client is None:
             self._client = pymongo.MongoClient('mongodb+srv://russ-admin:cooperman@cluster0.gqxah.mongodb.net/newDB?readPreference=secondary&retryWrites=true&w=majority')
-        database = self._client.URLREDIRECT
-        mappingCollection = database.SlugMapping
-        return mappingCollection
+        _database = self._client.URLREDIRECT
+        _mappingCollection = _database.SlugMapping
+        return _mappingCollection
 
     

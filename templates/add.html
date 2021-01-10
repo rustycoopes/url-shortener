@@ -2,6 +2,9 @@
 {% block title%}URL Shortener{% endblock%}
 {% block headline%}Mapping viewer{% endblock%}
 {% block content %}
-    {{slug}} mapps to {{url}}
+
+    <td><a class="btn btn-outline-primary" href="/{{ slug }}" role="button">Run</a></td>
+    <br>    
+    <code>{{slug}}</code> maps to the URL  {{url}}
 
 {% endblock %}

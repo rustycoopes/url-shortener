@@ -1,5 +1,24 @@
 {% extends "base.html" %}
 {% block title%}View Mappings {% endblock%}
 {% block content %}
-    {{content}}
+<table class="table">
+    <thead>
+        <th scope="col" width ="100px">Run Slug</th>
+        <th scope="col" width ="100px">View Mapping</th>
+        <th scope="col">Slug</th>
+      <th scope="col">Url</th>
+    </thead>
+    <tbody> 
+        {% for mapping in content %}
+
+        <tr scope="row">
+            <td><a class="btn btn-outline-primary" href="/{{ mapping['slug'] }}" role="button">Run</a></td>
+            <td><a class="btn btn-outline-primary" href="/mapping/{{ mapping['slug'] }}" role="button">View</button></td>
+            <td>{{ mapping['slug'] }}</td> 
+            <td>{{ mapping['url'] }}</td>
+        </tr>
+
+        {% endfor %}
+    </tbody>
+</table> 
 {% endblock %}
