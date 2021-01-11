@@ -50,6 +50,74 @@
         </div>
     </div>
 </div>
+<form id="creationForm">
+    <label for="url">url</label>
+    <input type="text" name="url" id="url" />
+     <button id="btnSubmit" type="submit">Submit</button>
+</form>
+
+
+<script>
+    
+    function handleSubmit(event, form) {
+
+        var url = window.location.origin + "/";
+        event.preventDefault();
+        const btn = document.getElementById('btnSubmit');
+        btn.disabled = true;
+        setTimeout(() => btn.disabled = false, 2000);
+        
+        const jsonData = buildJsonFormData(form);
+
+        const headers = buildHeaders();
+
+        const response = performPostHttpRequest(url, headers, jsonData);
+        console.log(response);
+
+    }
+
+    function performPostHttpRequest(fetchLink, headers, body) {
+        if(!fetchLink || !headers || !body) {
+            throw new Error("One or more POST request parameters was not passed.");
+        }
+        try {
+            const rawResponse = fetch(fetchLink, {
+                method: "POST",
+                headers: headers,
+                body: JSON.stringify(body)
+            });
+            const content = rawResponse.json;
+            return content;
+        }
+        catch(err) {
+            console.error(`Error at fetch POST: ${err}`);
+            throw err;
+        }
+     }
+
+    function buildJsonFormData(form) {
+        const jsonFormData = {};
+        for(const pair of new FormData(form)) {
+            jsonFormData[pair[0]] = pair[1];
+        }
+        return jsonFormData;
+    }
+
+    function buildHeaders(authorization = null) {
+        const headers = {
+            "Content-Type": "application/json",
+        };
+        return headers;
+    }
+    
+    const form = document.querySelector('#creationForm');
+    
+    form.addEventListener('submit', function(e){
+          handleSubmit(e, this)
+    });
+
+</script>
+
 
 <div class="alert alert-warning alert-dismissible fade show" role="alert">
     <strong>https://www.russcoopersoftware.com</strong> follow link to find out more.

@@ -7,6 +7,7 @@ class MappingCollection:
 
     def save_mapping(self, slug, url):
         # TODO : consider unique index for collection to get error on insert 
+        # TODO : Check for null slug
         _mappings = self._get_collecton()
         _data = {'slug': slug, 'url':url}
         return _mappings.insert_one(_data).inserted_id is not None
