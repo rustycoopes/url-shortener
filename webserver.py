@@ -9,6 +9,8 @@ app = Flask(__name__)
 from invalid_usage import InvalidUsage
 from validation import validate_shortener_request
 from datastore import MappingCollection
+from configparser import ConfigParser
+
 
 @app.route('/home', methods=['GET'])
 def view_home():
@@ -17,13 +19,15 @@ def view_home():
 
 @app.route('/mappings', methods=['GET'])
 def view_mappings():
-    _all = MappingCollection().load_all()
+    global mappings
+    _all = mappings.load_all()
     return render_template('view.html', content=_all)
 
 @app.route('/mapping/<slug>', methods=['GET'])
 def view(slug=''):
     logging.info('slug received {}'.format(slug))
-    _mapping = MappingCollection().load_mapping(slug)
+    global mappings
+    _mapping = mappings.load_mapping(slug)
     return render_template('add.html', slug=_mapping['slug'], url=_mapping['url'])
 
 @app.route('/<slug>', methods=['GET'])
@@ -36,7 +40,8 @@ def serve(slug):
 
     if slug is not None:
         logging.info('slug received \'{}\', loading mapping'.format(slug))
-        _mapping = MappingCollection().load_mapping(slug)
+        global mappings
+        _mapping = mappings.load_mapping(slug)
         if _mapping:
             return redirect(_mapping['url'])
         else: 
@@ -66,7 +71,8 @@ def serve_or_save():
         _slug = generate('1234567890abcdef', 5)  
         logging.info('saving NEW slug "{}" and url "{}" will then redirect to url'.format(_slug, _url))
         _errors = ''
-        if not MappingCollection().save_mapping(_slug, _url):
+        global mappings
+        if not mappings.save_mapping(_slug, _url):
             _errors = 'Failed to save'
             logging.warning('failed to save document {}'.format(_errors))
         return jsonify({'slug': _slug, 'url':_url,'errors':_errors})
@@ -83,6 +89,13 @@ def handle_invalid_usage(error):
 
 def is_development():
     return not 'gunicorn' in os.environ.get('SERVER_SOFTWARE', '')
+
+conf = ConfigParser()  
+conf.read(r'.\config\production.cfg')
+dataStoreConnectionString = conf['datastore']['ConnectionString']
+collectionName = conf['datastore']['CollectionName']
+databaseName = conf['datastore']['DatabaseName']
+mappings = MappingCollection(dataStoreConnectionString, databaseName, collectionName)
 
 if __name__ == '__main__':
     if is_development():
