@@ -8,7 +8,7 @@ from flask_inputs.validators import JsonSchema
 # we want an object containing a required greetee  string value
 shortener_schema = {
    'type': 'object',
-    'oneOf':[ 
+    'anyOf':[ 
        {'required': ['slug']},
        {'required': ['url']} 
     ],

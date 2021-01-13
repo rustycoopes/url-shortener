@@ -1,8 +1,8 @@
 from sys import path
 import os
-#additionalPath = os.path.realpath('..\\')
-#path.append(additionalPath)
-#print(path)
+additionalPath = os.path.realpath('./tests/')
+path.append(additionalPath)
+print(path)
 
 import webserver
 import pytest
@@ -19,7 +19,7 @@ def client():
 @pytest.fixture()
 def mappingColl():
     conf = ConfigParser()  
-    conf.read(r'.\config\test.cfg')
+    conf.read(r'./config/test.cfg')
     dataStoreConnectionString = conf['datastore']['ConnectionString']
     collectionName = conf['datastore']['CollectionName']
     databaseName = conf['datastore']['DatabaseName']

@@ -6,11 +6,7 @@ WORKDIR /app
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-RUN mkdir ./testresults
-
-RUN pytest > ./testresults/results.log
-
-RUN cat ./testresults/results.log
+RUN pytest
 
 EXPOSE 8000
 
