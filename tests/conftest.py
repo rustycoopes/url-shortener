@@ -28,3 +28,29 @@ def mappingColl():
     mongoCollection = mappingColl._get_collecton()
     mongoCollection.remove({})
 
+
+
+@pytest.fixture()
+def create_valid_mapping_request():
+    """
+    Helper function for creating a correctly-structured
+    json request
+    """
+    def _create_valid_mapping_request(slug="fixture", url="fixURL"):
+        return {
+            "slug": slug,
+            "url":url
+        }
+    return _create_valid_mapping_request
+
+@pytest.fixture()
+def create_invalid_mapping_request():
+    """
+    Helper function for creating a correctly-structured
+    json request
+    """
+    def _create_invalid_mapping_request(name="fixture"):
+        return {
+            "name": name,
+        }
+    return _create_invalid_mapping_request
