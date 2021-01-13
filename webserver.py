@@ -91,7 +91,7 @@ def is_development():
     return not 'gunicorn' in os.environ.get('SERVER_SOFTWARE', '')
 
 conf = ConfigParser()  
-conf.read(r'.\config\production.cfg')
+conf.read(r'./config/production.cfg')
 dataStoreConnectionString = conf['datastore']['ConnectionString']
 collectionName = conf['datastore']['CollectionName']
 databaseName = conf['datastore']['DatabaseName']
