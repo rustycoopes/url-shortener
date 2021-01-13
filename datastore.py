@@ -9,8 +9,6 @@ class MappingCollection:
         self._collectionName = collectionName
 
     def save_mapping(self, slug, url):
-        # TODO : consider unique index for collection to get error on insert 
-        # TODO : Check for null slug
         if slug is None or slug == "":
             raise ValueError("Slug must be non-null and non-empty")
 
@@ -29,7 +27,6 @@ class MappingCollection:
 
 
     def _get_collecton(self):
-        # TODO : Move connection string into configuration, possibly also database and collection name
         if self._client is None:
             self._client = pymongo.MongoClient(self._connectionString)
         _database = self._client[self._databaseName]
