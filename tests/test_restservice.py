@@ -16,7 +16,6 @@ def test_send_only_url_will_create_slug( mocker, client):
     assert result["url"] == url
     assert result["errors"] == ""
     
-
 def test_send_only_url_will_respond_error_if_not_saved( mocker, client):
     url = "someUrl"
     mocker.patch('webserver.MappingCollection.save_mapping', return_value = False)
@@ -50,7 +49,6 @@ def test_send_slug_only_redirects_if_exists( mocker, client):
     client.get("/{}".format(slug))
     webserver.redirect.assert_called_with(url)
     
-
 def test_send_slug_only_errors_if_not_exist( client):
     slug = "doesntExist"
     response = client.get("/{}".format(slug))

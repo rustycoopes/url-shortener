@@ -22,10 +22,8 @@ shortener_schema = {
    },
 }
 
-
 class ShortenerInputs(Inputs):
    json = [JsonSchema(schema=shortener_schema)]
-
 
 def validate_shortener_request(request):
    inputs = ShortenerInputs(request)

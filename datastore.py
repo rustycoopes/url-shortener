@@ -25,7 +25,6 @@ class MappingCollection:
         _mappings = self._get_collecton()
         return _mappings.find()
 
-
     def _get_collecton(self):
         if self._client is None:
             self._client = pymongo.MongoClient(self._connectionString)

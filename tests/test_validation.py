@@ -2,7 +2,6 @@ from validation import validate_shortener_request
 import pytest
 from flask import Flask, request
 
-
 app = Flask(__name__)
 
 def test_is_valid_message(create_valid_mapping_request):
@@ -14,7 +13,6 @@ def test_is_valid_message(create_valid_mapping_request):
     with app.test_request_context('/', json=json_input):
        errors = validate_shortener_request(request)
        assert errors is None
-
 
 @pytest.mark.parametrize("required_parm_name", ["slug", "url"])
 def test_is_valid_just_url(required_parm_name, create_valid_mapping_request):

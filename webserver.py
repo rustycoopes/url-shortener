@@ -11,11 +11,9 @@ from validation import validate_shortener_request
 from datastore import MappingCollection
 from configparser import ConfigParser
 
-
 @app.route('/home', methods=['GET'])
 def view_home():
     return render_template('index.html', content='')
-
 
 @app.route('/mappings', methods=['GET'])
 def view_mappings():
@@ -50,8 +48,6 @@ def serve(slug):
         logging.warning('slug received {}, mapping could not be found.'.format(slug))
         return jsonify({'error':'mapping not found, url to redirect could not be performed.'})
  
-
-
 @app.route('/', methods=['GET', 'POST'])
 def serve_or_save():
     """
@@ -109,7 +105,6 @@ def handle_invalid_usage(error):
 
 def is_development():
     return not 'gunicorn' in os.environ.get('SERVER_SOFTWARE', '')
-
 
 """
 START OF MAIN RUN SECTION
