@@ -28,13 +28,16 @@ Calls to get or post are in the following format
 * Flask service which runs under gunicorn.
 * Using bootstrap for styling
 
-### Backend
-Mongo database - connection string supplied in .....
+### Datastore
+This application uses a Mongo database (currently atlas) - connection string supplied in configuration files within the config folder.
+File contents provide connection string, database name and collection name
 
+### Logging
+Logging is to **stdout**, and is using basic python logging.  For current deployment, this is reported to StackDriver
 
 ### Deployment
-Build includes docker file.
-Built to run as a google run service
+Build includes docker file **DockerFile**.
+This project is currently built under Cloud Build and runs within google run.
 
 ### Dev Setup
 To install, ensure **python 3.6** up, plus **pipenv**
@@ -44,7 +47,7 @@ To install
 * [ ] `pytest`
 
 To Run
-* [ ] Start the container, and the app will run, or
-* [ ] gunicorn -b 0.0.0.0:8000 webserver:app
+* [ ] Start the container, and the app will run  `docker run --rm -it  -p 8000:8000/tcp imagename`, or
+* [ ] `gunicorn -b 0.0.0.0:8000 webserver:app`
 
 
